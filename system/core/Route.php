@@ -27,24 +27,31 @@ class Route
 
 	public function __construct ()
 	{
-		$this->get_path();	
+		$this->get_path();
 		$this->get_config_route();
 		$this->replace();
-		
+		/*	
 		echo '<pre>';
 		print_r(self::$routes);
 		print_r($this->_path);
 		print_r(self::$go);
 		echo '</pre>';
+		*/
 	}
 
-	public static function start ()
+	public function start ()
 	{
-		//$countGo = count(self::$go['parmes']);
-		$controller = "App\controllers\\".self::$go['controller'].'Controller';
-		$C = new $controller();
-		// activate the controller & method & parms
-		call_user_func_array(array($C, self::$go['method']), (array) self::$go['parmes']);
+		if (self::$go['controller'] != null)
+		{
+			$controller = "App\controllers\\".self::$go['controller'].'Controller';
+			$C = new $controller();
+			// activate the controller & method & parms
+			call_user_func_array(array($C, self::$go['method']), (array) self::$go['parmes']);
+		}
+		else
+		{
+			die('ERROR: You should to set a default controller from the config route!');
+		}
 	}
 
 	private function get_path ()
@@ -55,8 +62,9 @@ class Route
 		}
 		else
 		{
+			//$this->_path = array();
 			// show error about the default controller or the path not found
-			die('ERROR: cannot get the path!');
+			//die('ERROR: cannot get the path!');
 		}
 	}
 

@@ -3,8 +3,8 @@
 namespace SYS\core;
 
 /*
-* Loader::controller($filename);
-* Loader::helper
+* Load::controller($filename);
+* Load::file
 */
 
 class Load

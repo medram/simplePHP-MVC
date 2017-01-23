@@ -1,6 +1,6 @@
 <?php
 
-$route['default_controller'] = '';
+$route['default_controller'] = 'home';
 //$route['home/{num}'] = 'home/go/$1';
 
 

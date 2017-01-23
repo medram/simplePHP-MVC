@@ -1,24 +1,33 @@
 <?php
 
+// autoloading file using the namespaces
 spl_autoload_register (function($path){
-
-	$filesPath = array(
-		'MR'	=> SYSPATH.'/core/bootstrap',
-		'SYS'	=> 'system',
-		);
-
-	foreach ($filesPath as $k => $v)
+	static $namespaces = array();
+	
+	if (count($namespaces) == 0)
 	{
-		$path = str_ireplace($k, $v, $path);
-		$file = str_ireplace("\\",DS,$path).EXT;
-		//$file = trim($path.'.php','\\');
-		//echo '<pre>'.$file.'</pre><br>';
+		include_once APPPATH.'config/namespaces'.EXT;
+	}
 		
-		if (file_exists($file))
+	if (isset($namespaces) && $namespaces != null)
+	{
+		foreach ($namespaces as $k => $v)
 		{
-			include_once $file;
-			break;
-		}		
+			$path = str_ireplace($k, $v, $path);
+			$file = str_ireplace("\\",DS,$path).EXT;
+			//$file = trim($path.'.php','\\');
+			//echo '<pre>'.$file.'</pre><br>';
+			
+			if (file_exists($file))
+			{
+				include_once $file;
+				break;
+			}		
+		}
+	}
+	else
+	{
+		die('namespaces array is not found from the config folder');
 	}
 
 })
